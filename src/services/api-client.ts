@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export interface FetchRespnse<T> {
+export interface FetchResponse<T> {
   statusCode: number;
   isSuccess: boolean;
-  errorMessages: [];
-  results: T[];
+  errorMessages: string[];
+  result: T[];
 }
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5049/api",
@@ -18,7 +18,7 @@ class APIClient<T> {
 
   getAll = () => {
     return axiosInstance
-      .get<FetchRespnse<T>>(this.endpoint)
+      .get<FetchResponse<T>>(this.endpoint)
       .then((res) => res.data);
   };
 }

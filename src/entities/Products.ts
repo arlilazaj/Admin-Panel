@@ -1,4 +1,3 @@
-import { Category } from "./Category";
 
 export interface Products {
   id: number;
@@ -12,5 +11,5 @@ export interface Products {
   disccountPrice: number;
   stock: number;
   tag: string;
-  categories: Category[];
+  categories: string[];
 }
