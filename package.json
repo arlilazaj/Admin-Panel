@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.19",
     "autoprefixer": "^10.4.17",
+    "axios": "^1.6.5",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.21.3"
   },
   "devDependencies": {

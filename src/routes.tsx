@@ -7,9 +7,9 @@ const routes = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-        { path: "users", element: <Users /> },
-        {path:'products',element:<Product/>}
-],
+      { path: "users", element: <Users /> },
+      { path: "products", element: <Product /> },
+    ],
   },
 ]);
 

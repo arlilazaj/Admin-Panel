@@ -1,3 +1,5 @@
+import { Category } from "./Category";
+
 export interface Products {
   id: number;
   image: string;
@@ -10,4 +12,5 @@ export interface Products {
   disccountPrice: number;
   stock: number;
   tag: string;
+  categories: Category[];
 }
