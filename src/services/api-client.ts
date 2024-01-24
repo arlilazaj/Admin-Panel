@@ -6,6 +6,12 @@ export interface FetchResponse<T> {
   errorMessages: string[];
   result: T[];
 }
+export interface DeleteResponse {
+  statusCode: number;
+  isSuccess: boolean;
+  errorMessages: string[];
+  result: null;
+}
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5049/api",
 });
@@ -19,6 +25,11 @@ class APIClient<T> {
   getAll = () => {
     return axiosInstance
       .get<FetchResponse<T>>(this.endpoint)
+      .then((res) => res.data); 
+  };
+  delete = (id: number) => {
+    return axiosInstance
+      .delete<DeleteResponse>(this.endpoint + "/" + id)
       .then((res) => res.data);
   };
 }
