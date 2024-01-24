@@ -20,7 +20,7 @@ const SideBar = () => {
         <div className="flex items-center pl-2 hover:bg-red-700">
           <MdProductionQuantityLimits className="text-white text-sm sm:text-md md:text-2xl mr-2" />
           <Link
-            to={"/products"}
+            to={"products"}
             className="text-white text-sm sm:text-md md:text-2xl "
           >
             Products
