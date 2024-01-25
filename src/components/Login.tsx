@@ -12,8 +12,7 @@ const Login = () => {
     setloginSuccess(true);
     const token = response.result.token;
     const tokenRole = APIauth.extractRoleFromJwt(token);
-    console.log("tokenRole", tokenRole);
-    console.log("token", token);
+    localStorage.setItem("token", JSON.stringify(token));
     if (tokenRole.role === "admin") {
       setTimeout(() => {
         window.location.href = "/layout";

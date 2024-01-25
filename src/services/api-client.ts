@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const authToken = JSON.parse(localStorage.getItem("token")!);
+console.log(authToken);
 export interface FetchResponse<T> {
   statusCode: number;
   isSuccess: boolean;
@@ -14,6 +16,9 @@ export interface DeleteResponse {
 }
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5049/api",
+  headers: {
+    Authorization: `Bearer ${authToken}`,
+  },
 });
 class APIClient<T> {
   endpoint: string;
@@ -25,7 +30,7 @@ class APIClient<T> {
   getAll = () => {
     return axiosInstance
       .get<FetchResponse<T>>(this.endpoint)
-      .then((res) => res.data); 
+      .then((res) => res.data);
   };
   delete = (id: number) => {
     return axiosInstance

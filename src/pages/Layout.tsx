@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import SideBar from "../components/SideBar";
+import { Toaster } from "react-hot-toast";
 
 const Layout = () => {
   return (
@@ -8,6 +9,8 @@ const Layout = () => {
         <SideBar></SideBar>
         <div className="col-span-2 sm:col-span-3 pt-10 mt-20 bg-gray-200 ">
           <Outlet />
+          
+          <Toaster />
         </div>
       </div>
     </div>
