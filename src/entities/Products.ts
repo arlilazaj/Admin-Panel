@@ -1,3 +1,4 @@
+import { Category } from "./Category";
 
 export interface Products {
   id: number;
@@ -6,10 +7,10 @@ export interface Products {
   specification: string;
   reviews: string;
   price: number;
-  rating: string;
+
   type: string;
   disccountPrice: number;
   stock: number;
   tag: string;
-  categories: string[];
+  categories: Category[];
 }

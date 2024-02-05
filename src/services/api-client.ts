@@ -37,5 +37,11 @@ class APIClient<T> {
       .delete<DeleteResponse>(this.endpoint + "/" + id)
       .then((res) => res.data);
   };
+
+  create = (data: T) => {
+    return axiosInstance
+      .post<FetchResponse<T>>(this.endpoint, data)
+      .then((res) => res.data);
+  };
 }
 export default APIClient;

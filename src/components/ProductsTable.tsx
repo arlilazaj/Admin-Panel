@@ -59,7 +59,7 @@ const ProductsTable = ({ products }: Props) => {
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
                 <img
-                  src={product.image}
+                  src={`data:image/jpeg;base64, ${product.image}`}
                   className="w-8 h-8 object-cover rounded"
                 />
               </th>
@@ -69,8 +69,8 @@ const ProductsTable = ({ products }: Props) => {
 
               <td className="px-6 py-4">
                 {product.categories.map((cat, index) => (
-                  <span key={index}>
-                    {cat} {index < product.categories.length - 1 && ","}
+                  <span key={cat.id}>
+                    {cat.type} {index < product.categories.length - 1 && ","}
                   </span>
                 ))}
               </td>
