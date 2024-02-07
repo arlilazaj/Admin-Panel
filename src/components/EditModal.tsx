@@ -1,11 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useEffect, useState } from "react";
-import useCategories from "../hooks/useCategories";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import useCreateProducts from "../hooks/useCreateProducts";
+import useCategories from "../hooks/useCategories";
+import { Products } from "../entities/Products";
+import useUpdateProducts from "../hooks/useUpdateProducts";
 interface Props {
   onCancel: (cancel: boolean) => void;
+  selectedProduct: Products;
 }
 const schema = z.object({
   type: z
@@ -16,6 +18,7 @@ const schema = z.object({
     .number({ invalid_type_error: "Price is required" })
     .min(0.01)
     .max(100_000),
+  id: z.number().optional(),
   stock: z
     .number({ invalid_type_error: "stock is required" })
     .min(0.01)
@@ -28,7 +31,6 @@ const schema = z.object({
     .string()
     .min(10, { message: "The specification should be at least 10 characters " })
     .max(100),
-  
   categoryId: z
     .array(z.string())
     .refine((value) => value.length > 0, {
@@ -57,9 +59,9 @@ const schema = z.object({
   }),
 });
 type ProductFormData = z.infer<typeof schema>;
-const Modal = ({ onCancel }: Props) => {
+const EditModal = ({ onCancel, selectedProduct }: Props) => {
   const [textareaRows] = useState(8);
-  const createProduct = useCreateProducts();
+  const updateProduct = useUpdateProducts(selectedProduct.id);
 
   const { data: categories } = useCategories();
   const {
@@ -110,11 +112,18 @@ const Modal = ({ onCancel }: Props) => {
   const onSubmit = async (data: ProductFormData) => {
     try {
       const file = data.image;
-      const base64Image = await convertFileToBase64(file);
 
-      const formDataWithBase64 = { ...data, image: base64Image };
+      if (file) {
+        const base64Image = await convertFileToBase64(file);
 
-      await createProduct.mutateAsync(formDataWithBase64);
+        const formDataWithBase64 = {
+          ...data,
+          image: base64Image,
+          id: selectedProduct.id,
+        };
+        await updateProduct.mutateAsync(formDataWithBase64);
+      }
+
       setTimeout(() => {
         onCancel(false);
       }, 1000);
@@ -141,7 +150,7 @@ const Modal = ({ onCancel }: Props) => {
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25 modal-overlay">
         <div className="bg-white p-8 rounded-md shadow-md w-1/3  max-h-[80vh] overflow-y-auto">
-          <h2 className="text-2xl font-semibold mb-4">Products</h2>
+          <h2 className="text-2xl font-semibold mb-4">Edit Product</h2>
           <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <div className="mb-4">
               <label
@@ -154,6 +163,7 @@ const Modal = ({ onCancel }: Props) => {
                 {...register("type")}
                 type="text"
                 id="type"
+                defaultValue={selectedProduct.type}
                 className="form-input border-2 hover:border-blue-500 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-700"
               />
               {errors.type && (
@@ -172,8 +182,8 @@ const Modal = ({ onCancel }: Props) => {
                 {...register("price", { valueAsNumber: true })}
                 type="number"
                 id="price"
+                defaultValue={selectedProduct.price}
                 name="price"
-                defaultValue=""
                 className="form-input border-2 hover:border-blue-500 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-700"
               />
               {errors.price && (
@@ -191,6 +201,7 @@ const Modal = ({ onCancel }: Props) => {
                 {...register("stock", { valueAsNumber: true })}
                 type="number"
                 id="stock"
+                defaultValue={selectedProduct.stock}
                 className="form-input border-2 hover:border-blue-500 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-700"
               />
               {errors.stock && (
@@ -207,6 +218,7 @@ const Modal = ({ onCancel }: Props) => {
               <textarea
                 {...register("description")}
                 name="description"
+                defaultValue={selectedProduct.description}
                 id="description"
                 rows={textareaRows}
                 className="form-input border-2 hover:border-blue-500 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-700s"
@@ -225,6 +237,7 @@ const Modal = ({ onCancel }: Props) => {
               <textarea
                 {...register("specification")}
                 name="specification"
+                defaultValue={selectedProduct.specification}
                 id="specification"
                 rows={textareaRows}
                 className="form-input border-2 hover:border-blue-500 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-700s"
@@ -243,6 +256,7 @@ const Modal = ({ onCancel }: Props) => {
               <select
                 {...register("tag")}
                 name="tag"
+                defaultValue={selectedProduct.tag}
                 id="tag"
                 className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring hover:border-blue-700"
               >
@@ -266,6 +280,7 @@ const Modal = ({ onCancel }: Props) => {
               <textarea
                 {...register("reviews")}
                 name="reviews"
+                defaultValue={selectedProduct.reviews}
                 id="reviews"
                 rows={textareaRows}
                 className="form-input border-2 hover:border-blue-500 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-700s"
@@ -285,6 +300,9 @@ const Modal = ({ onCancel }: Props) => {
                 {...register("categoryId")}
                 name="categoryId"
                 id="categoryId"
+                defaultValue={selectedProduct.categories.map((category) =>
+                  String(category.id)
+                )}
                 multiple
                 className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring hover:border-blue-500"
               >
@@ -292,7 +310,7 @@ const Modal = ({ onCancel }: Props) => {
                   Select an option
                 </option>
                 {categories?.result.map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <option key={category.id} value={String(category.id)}>
                     {category.type}
                   </option>
                 ))}
@@ -301,6 +319,10 @@ const Modal = ({ onCancel }: Props) => {
                 <p className="text-red-500">{errors.categoryId.message}</p>
               )}
             </div>
+            <img
+              src={`data:image/jpeg;base64,${selectedProduct.image}`}
+              className="w-20 h-20 mb-6 object-cover rounded"
+            />
             <div className="mb-4 ">
               <label
                 htmlFor="image"
@@ -339,4 +361,4 @@ const Modal = ({ onCancel }: Props) => {
   );
 };
 
-export default Modal;
+export default EditModal;

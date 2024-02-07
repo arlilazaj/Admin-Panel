@@ -28,7 +28,7 @@ const SideBar = () => {
         </div>
         <div className="flex items-center pl-2 hover:bg-red-700">
           <TbCategoryFilled className="text-white text-sm sm:text-md md:text-2xl mr-2" />
-          <Link to={"/"} className="text-white text-sm sm:text-md md:text-2xl">
+          <Link to={"/categories"} className="text-white text-sm sm:text-md md:text-2xl">
             Categories
           </Link>
         </div>

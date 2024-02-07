@@ -43,5 +43,11 @@ class APIClient<T> {
       .post<FetchResponse<T>>(this.endpoint, data)
       .then((res) => res.data);
   };
+  edit = (id: number, updatedData: T) => {
+    return axiosInstance.put<DeleteResponse>(
+      this.endpoint + "/" + id,
+      updatedData
+    );
+  };
 }
 export default APIClient;

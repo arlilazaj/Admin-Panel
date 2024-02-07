@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Products } from "../entities/Products";
 import DeleteProduct from "./DeleteProduct";
+
+import EditModal from "./EditModal";
 import Modal from "./Modal";
 
 interface Props {
@@ -9,6 +11,12 @@ interface Props {
 
 const ProductsTable = ({ products }: Props) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [showEditModal, setShowEditModal] = useState<number | null>(null);
+  const findProductById = (productId: number) => {
+    return products.find((product) => product.id === productId);
+  };
+
+  console.log(products);
   return (
     <div className="relative overflow-x-auto sm:rounded-lg px-20">
       <div className="grid grid-cols-3 place-content-center mb-5">
@@ -49,6 +57,7 @@ const ProductsTable = ({ products }: Props) => {
           {showModal ? (
             <Modal onCancel={(cancel) => setShowModal(cancel)} />
           ) : null}
+
           {products?.map((product) => (
             <tr
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -75,7 +84,10 @@ const ProductsTable = ({ products }: Props) => {
                 ))}
               </td>
               <td className="px-6 py-6 text-right flex">
-                <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline pr-2">
+                <button
+                  onClick={() => setShowEditModal(product.id)}
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline pr-2"
+                >
                   Edit
                 </button>
                 <DeleteProduct id={product.id} />
@@ -84,6 +96,12 @@ const ProductsTable = ({ products }: Props) => {
           ))}
         </tbody>
       </table>
+      {showEditModal && (
+        <EditModal
+          onCancel={() => setShowEditModal(null)}
+          selectedProduct={findProductById(showEditModal)!}
+        />
+      )}
     </div>
   );
 };
