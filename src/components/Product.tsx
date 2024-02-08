@@ -1,9 +1,7 @@
-
-import useProducts from "../hooks/useProducts";
+import useProducts from "../Producthooks/useProducts";
 import ProductsTable from "./ProductsTable";
 
 const Product = () => {
- 
   const { data, error } = useProducts();
 
   if (error || !data) return null;

@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import useCategories from "../hooks/useCategories";
+import useCategories from "../Categoryhooks/useCategories";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useCreateProducts from "../hooks/useCreateProducts";
+import useCreateProducts from "../Producthooks/useCreateProducts";
 interface Props {
   onCancel: (cancel: boolean) => void;
 }
@@ -28,7 +28,7 @@ const schema = z.object({
     .string()
     .min(10, { message: "The specification should be at least 10 characters " })
     .max(100),
-  
+
   categoryId: z
     .array(z.string())
     .refine((value) => value.length > 0, {

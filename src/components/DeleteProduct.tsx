@@ -1,4 +1,4 @@
-import useDeleteProducts from "../hooks/useDeleteProducts";
+import useDeleteProducts from "../Producthooks/useDeleteProducts";
 
 function DeleteProduct(props: { id: number }) {
   const deleteProduct = useDeleteProducts(props.id);

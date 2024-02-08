@@ -16,7 +16,6 @@ const ProductsTable = ({ products }: Props) => {
     return products.find((product) => product.id === productId);
   };
 
-  console.log(products);
   return (
     <div className="relative overflow-x-auto sm:rounded-lg px-20">
       <div className="grid grid-cols-3 place-content-center mb-5">

@@ -13,7 +13,10 @@ const SideBar = () => {
       <aside className="flex flex-col bg-black w-full rounded-lg h-full pl-2 gap-2 pt-2 ">
         <div className="flex items-center place-items-center pl-2 hover:bg-red-700">
           <MdDashboard className="text-white text-sm sm:text-md md:text-2xl mr-2" />
-          <Link to={"/"} className="text-white text-sm sm:text-md md:text-2xl">
+          <Link
+            to={"/layout"}
+            className="text-white text-sm sm:text-md md:text-2xl"
+          >
             Dashboard
           </Link>
         </div>
@@ -28,7 +31,10 @@ const SideBar = () => {
         </div>
         <div className="flex items-center pl-2 hover:bg-red-700">
           <TbCategoryFilled className="text-white text-sm sm:text-md md:text-2xl mr-2" />
-          <Link to={"/categories"} className="text-white text-sm sm:text-md md:text-2xl">
+          <Link
+            to={"categories"}
+            className="text-white text-sm sm:text-md md:text-2xl"
+          >
             Categories
           </Link>
         </div>

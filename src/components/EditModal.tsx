@@ -2,9 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import useCategories from "../hooks/useCategories";
+import useCategories from "../Categoryhooks/useCategories";
 import { Products } from "../entities/Products";
-import useUpdateProducts from "../hooks/useUpdateProducts";
+import useUpdateProducts from "../Producthooks/useUpdateProducts";
 interface Props {
   onCancel: (cancel: boolean) => void;
   selectedProduct: Products;
