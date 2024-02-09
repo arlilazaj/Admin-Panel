@@ -16,6 +16,7 @@ const routes = createBrowserRouter([
       { path: "users", element: <Users /> },
       { path: "products", element: <Product /> },
       { path: "categories", element: <Category /> },
+      { path: "users", element: <Users /> },
     ],
   },
 ]);

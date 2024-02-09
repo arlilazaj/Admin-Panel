@@ -5,7 +5,7 @@ import { FaUserFriends } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const SideBar = () => {
   return (
-    <div className="h-screen overflow-hidden w-full">
+    <div className="h-full  w-full">
       <h1 className="text-black text-sm sm:text-md md:text-2xl font-sans font-bold pl-2 py-5 ">
         Admin
       </h1>
@@ -41,7 +41,7 @@ const SideBar = () => {
         <div className="flex items-center pl-2 hover:bg-red-700">
           <FaUserFriends className="text-white text-sm sm:text-md md:text-2xl mr-2" />
           <Link
-            to={"/users"}
+            to={"users"}
             className="text-white text-sm sm:text-md md:text-2xl"
           >
             Users

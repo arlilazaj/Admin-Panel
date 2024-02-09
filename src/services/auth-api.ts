@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
 class APIauth {
   login = async (username: string, password: string) => {
     try {
-      const response = await axiosInstance.post("/UserAuth/Login", {
+      const response = await axiosInstance.post("/User/Login", {
         username,
         password,
       });

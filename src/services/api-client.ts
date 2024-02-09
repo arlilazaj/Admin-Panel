@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const authToken = JSON.parse(localStorage.getItem("token")!);
-console.log(authToken);
+
 export interface FetchResponse<T> {
   statusCode: number;
   isSuccess: boolean;
@@ -32,7 +32,7 @@ class APIClient<T> {
       .get<FetchResponse<T>>(this.endpoint)
       .then((res) => res.data);
   };
-  delete = (id: number) => {
+  delete = (id: number | string) => {
     return axiosInstance
       .delete<DeleteResponse>(this.endpoint + "/" + id)
       .then((res) => res.data);
@@ -43,7 +43,7 @@ class APIClient<T> {
       .post<FetchResponse<T>>(this.endpoint, data)
       .then((res) => res.data);
   };
-  edit = (id: number, updatedData: T) => {
+  edit = (id: number | string, updatedData: T) => {
     return axiosInstance.put<DeleteResponse>(
       this.endpoint + "/" + id,
       updatedData
